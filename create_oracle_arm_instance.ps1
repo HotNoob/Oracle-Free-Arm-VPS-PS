@@ -2,7 +2,8 @@
 #oci session authenticate
 #select your location, in my case i used ca-toronto-1, this will likely be different for you
 #if prompted for a profile name, type in "DEFAULT", or whatever you set $profile to be
-#after logging in, run the script and use output to fill out variables below
+#after logging in, fillout tenancy id below.
+#then run the script and use output to fill out the rest of the setup variables ($tenancyId, $imageId, $subnetId, $availDomain)
 
 #your account's tenancy id
 #on oracle cloud, go to profile -> tenancy: {your tenancy name here} -> {click} -> under Tenancy Information -> Copy OCID
