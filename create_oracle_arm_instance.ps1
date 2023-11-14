@@ -105,7 +105,7 @@ For ($i = 0; $i -lt $max; $i++)
 
     #request instance creation
     #must be single line, cuz iex / powershell syntax bs
-    $response = & iex "& oci compute instance launch --availability-domain $availDomain $authParams --compartment-id $tenancyId --image-id $imageId  --shape 'VM.Standard.A1.Flex' --shape-config `"{`'ocpus`':$cpus,`'memoryInGBs`':$ram}`"  --subnet-id $subnetId " 2>&1
+    $response = & iex "& oci compute instance launch --no-retry --availability-domain $availDomain $authParams --compartment-id $tenancyId --image-id $imageId  --shape 'VM.Standard.A1.Flex' --shape-config `"{`'ocpus`':$cpus,`'memoryInGBs`':$ram}`"  --subnet-id $subnetId " 2>&1
 
     If($silent -eq 0)
     {
