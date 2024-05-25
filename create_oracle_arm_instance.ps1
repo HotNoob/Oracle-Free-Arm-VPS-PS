@@ -1,9 +1,10 @@
 
+
 #oci session authenticate
 #select your location, in my case i used ca-toronto-1, this will likely be different for you
 #if prompted for a profile name, type in "DEFAULT", or whatever you set $profile to be
 #after logging in, fillout tenancy id below.
-#then run the script and use output to fill out the rest of the setup variables ($tenancyId, $imageId, $subnetId, $availDomain)
+#then run the script and use output to fill out the rest of the setup variables ($tenancyId, $imageId, $subnetId, $availDomain )
 
 #your account's tenancy id
 #on oracle cloud, go to profile -> tenancy: {your tenancy name here} -> {click} -> under Tenancy Information -> Copy OCID
@@ -24,6 +25,11 @@ $subnetId = "ocid1.subnet.oc1.***.***"
 #oci iam availability-domain list -c {your tenancy id (OCID) here}
 $availDomain = "IGuL:***"
 
+#ssh key to be put in authorized_keys
+# ssh-rsa *** rsa-key***
+$sshKey = 'ssh-rsa ***'
+
+
 ###### RUN SETUP FOR ABOVE VARIABLE VALUES ####
 ### ONCE variables have been set, set $setup = 0
 [bool] $setup = 1
@@ -43,6 +49,10 @@ $authParams = " --config-file $configFile --profile $profile  --auth security_to
 $requestInterval = 60 #interval in seconds
 $max = 60*60*24 / $requestInterval
 
+If($sshKey)
+{
+    $sshKey = "--metadata `"{'ssh_authorized_keys':'$sshKey'}`""
+}
 
 
 
@@ -105,7 +115,7 @@ For ($i = 0; $i -lt $max; $i++)
 
     #request instance creation
     #must be single line, cuz iex / powershell syntax bs
-    $response = & iex "& oci compute instance launch --no-retry --availability-domain $availDomain $authParams --compartment-id $tenancyId --image-id $imageId  --shape 'VM.Standard.A1.Flex' --shape-config `"{`'ocpus`':$cpus,`'memoryInGBs`':$ram}`"  --subnet-id $subnetId " 2>&1
+    $response = & iex "& oci compute instance launch --no-retry $sshKey --availability-domain $availDomain $authParams --compartment-id $tenancyId --image-id $imageId  --shape 'VM.Standard.A1.Flex' --shape-config `"{`'ocpus`':$cpus,`'memoryInGBs`':$ram}`"  --subnet-id $subnetId " 2>&1
 
     If($silent -eq 0)
     {
@@ -159,6 +169,14 @@ For ($i = 0; $i -lt $max; $i++)
         If($json.status -eq 200) #success ?
         {
             Write-Output "Status 200 = success?"
+            Read-Host -Prompt "Press any key to continue..."
+            Exit;
+        }
+
+        If($json.status -eq 401) #401
+        {
+            Write-Output "Status 401 = Authentication Failed / Expired."
+            Write-Output "Please Run: oci session authenticate"
             Read-Host -Prompt "Press any key to continue..."
             Exit;
         }
