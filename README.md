@@ -25,6 +25,14 @@ then run script.
 
 enjoy!
 
+#linux usage
+to install powershell and run script on linux:
+```
+apt install powershell
+chmod +x create_oracle_arm_instance.ps1
+./create_oracle_arm_instance.ps1
+```
+
 # session expiry!
 oci sessions expire every 24 hours, you must re-run:
 oci session authenticate
