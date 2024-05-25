@@ -1,4 +1,4 @@
-#!/usr/bin/powershell -Command
+#!/usr/bin/pwsh -Command
 
 #oci session authenticate
 #select your location, in my case i used ca-toronto-1, this will likely be different for you
