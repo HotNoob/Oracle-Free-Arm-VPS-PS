@@ -25,7 +25,7 @@ then run script.
 
 enjoy!
 
-#linux usage
+# linux usage
 to install powershell and run script on linux:
 ```
 apt install powershell
