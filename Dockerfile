@@ -1,8 +1,5 @@
 FROM ubuntu:24.04
 
-# Copy the script
-COPY ./create_oracle_arm_instance.ps1 /create_oracle_arm_instance.ps1
-
 # Install dependencies and latest python
 RUN apt-get update && apt-get install -y \
     wget \
