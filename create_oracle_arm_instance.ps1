@@ -42,7 +42,11 @@ $ram = 24 #memory size in gb
 
 #session authentication parameters
 $profile = "DEFAULT"
-$configFile = $env:USERPROFILE+"\.oci\config"
+If ($IsLinux) {
+    $configFile = "$HOME/.oci/config"
+} Else {
+    $configFile = "$env:USERPROFILE\.oci\config"
+}
 
 $authParams = " --config-file $configFile --profile $profile  --auth security_token "
 
