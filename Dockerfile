@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
 
 # Install OCI-CLI and accept all defaults
 # Ref: https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliinstall.htm#InstallingCLI__linux_and_unix
-RUN bash -c "$(curl -L https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh)" -- --accept-all-defaults
+RUN bash -c "$(curl -L https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh)" -- --accept-all-defaults --install-dir /usr/local/oracle-cli --exec-dir /usr/local/bin
 
 # Install Powershell 7.5 via package repository
 # Ref: https://learn.microsoft.com/en-us/powershell/scripting/install/install-ubuntu?view=powershell-7.5#installation-via-package-repository-the-package-repository
