@@ -9,11 +9,21 @@ follow instructions to install oracle cloud cli
 
 Install: https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliinstall.htm#InstallingCLI__windows
 
+## Using Docker
+
+First, build the docker image and run it using `--platform linux/amd64` due to `oci-cli` being `amd64` only.
+
+```console
+docker build --platform linux/amd64 -t oci:ps .
+```
+
 # usage
 
 in powershell prompt login to oracle cloud using this cli command:
 
+```console
 oci session authenticate
+```
 
 then open/edit script, add tenancy id. follow instructions in script. 
 
@@ -25,14 +35,33 @@ then run script.
 
 enjoy!
 
-# linux usage
+## linux usage
+
 to install powershell and run script on linux:
+
 ```
 apt install powershell
 chmod +x create_oracle_arm_instance.ps1
 ./create_oracle_arm_instance.ps1
 ```
 
+## docker usage
+
+```console
+docker run -it -p 8181:8181 -v $(pwd):/root -w /root --platform linux/amd64 oci:ps pwsh create_oracle_arm_instance.ps1
+```
+
 # session expiry!
 oci sessions expire every 24 hours, you must re-run:
+
+```console
 oci session authenticate
+```
+
+from docker:
+
+```console
+docker run -it -p 8181:8181 -v $(pwd):/root -w /root --platform linux/amd64 oci:ps oci session authenticate
+``` 
+
+then visit the URL provided in the output to log in, and it will redirect to `http://localhost:8181`.
